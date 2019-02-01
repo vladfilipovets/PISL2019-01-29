@@ -25,7 +25,7 @@ public class FiboA {
         System.out.printf("slowA(%d)=%d \n\t time=%d \n\n", n, fibo.slowA(n), fibo.time());
     }
 
-
+//
     private int calc(int n) {
         //здесь простейший вариант, в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
