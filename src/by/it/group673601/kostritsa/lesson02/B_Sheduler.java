@@ -1,0 +1,72 @@
+package by.it.group673601.kostritsa.lesson02;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+/*
+даны интервальные события events
+реализуйте метод calcStartTimes, так, чтобы число принятых к выполнению
+непересекающихся событий было максимально.
+
+Алгоритм жадный. Для реализации обдумайте надежный шаг.
+
+*/
+
+public class B_Sheduler {
+    //событие у аудитории(два поля: начало и конец)
+    static class Event {
+        int start;
+        int stop;
+
+        Event(int start, int stop) {
+            this.start = start;
+            this.stop = stop;
+        }
+
+        @Override
+        public String toString() {
+            return "(" + start + ":" + stop + ")";
+        }
+    }
+
+    public static void main(String[] args) {
+        B_Sheduler instance = new B_Sheduler();
+        Event[] events = {new Event(0, 3), new Event(0, 1), new Event(1, 2), new Event(3, 5),
+                new Event(1, 3), new Event(1, 3), new Event(1, 3), new Event(3, 6),
+                new Event(2, 7), new Event(2, 3), new Event(2, 7), new Event(7, 9),
+                new Event(3, 5), new Event(2, 4), new Event(2, 3), new Event(3, 7),
+                new Event(4, 5), new Event(6, 7), new Event(6, 9), new Event(7, 9),
+                new Event(8, 9), new Event(4, 6), new Event(8, 10), new Event(7, 10)
+        };
+        List<Event> starts = instance.calcStartTimes(events, 0, 20);
+        System.out.println(starts);
+    }
+
+    List<Event> calcStartTimes(Event[] events, int from, int to) {
+        List<Event> result = new ArrayList<>();
+        List<Event> eventList = Stream.of(events)
+                .sorted((e1, e2) -> {
+                    // сортируем по возрастанию окончания промежутков
+                    int startCompare = Integer.compare(e1.stop, e2.stop);
+                    if (startCompare == 0) {
+                        // return Integer.compare(e1.stop - e1.start, e2.stop - e2.start);
+                        return Integer.compare(e1.start, e2.start);
+                    }
+                    return startCompare;
+                })
+                .collect(Collectors.toList());
+
+        // теперь можно просто брать все непересекающиеся промежутки подряд.
+        int currentEventStopTime = eventList.get(0).stop;
+        result.add(eventList.get(0));
+        for (Event event : eventList) {
+            if (event.start >= currentEventStopTime) {
+                currentEventStopTime = event.stop;
+                result.add(event);
+            }
+        }
+        System.out.println(eventList);
+        return result;
+    }
+}
