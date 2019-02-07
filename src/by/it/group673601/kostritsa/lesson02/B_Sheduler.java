@@ -50,7 +50,6 @@ public class B_Sheduler {
                     // сортируем по возрастанию окончания промежутков
                     int startCompare = Integer.compare(e1.stop, e2.stop);
                     if (startCompare == 0) {
-                        // return Integer.compare(e1.stop - e1.start, e2.stop - e2.start);
                         return Integer.compare(e1.start, e2.start);
                     }
                     return startCompare;

@@ -27,20 +27,17 @@ public class A_VideoRegistrator {
 
         Arrays.sort(events);
 
-        // старт всегда будет на событии i = 0
         double startTime = events[i];
         double endTime = startTime + workDuration;
         result.add(events[i]);
 
         while (i < events.length) {
-            // если событие происходит до окончания текущего запуска регистратора, то мы считаем,
-            // что оно записалось видеорегистратором и идем дпльше по событиям
+            // если событие происходит до окончания текущего запуска регистратора
             if (events[i] <= endTime) {
                 i++;
                 continue;
             }
-            // Если событие происходит после окончания записи регистратора, то мы должны запустить видеорегистратор,
-            // пересчитать время окончания и добавить время старта в результаты
+            // Если событие происходит после окончания записи регистратора
             startTime = events[i];
             endTime = startTime + workDuration;
             result.add(events[i]);
