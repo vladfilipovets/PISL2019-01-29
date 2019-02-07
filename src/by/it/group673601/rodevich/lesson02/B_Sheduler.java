@@ -2,7 +2,9 @@ package by.it.group673601.rodevich.lesson02;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 /*
 даны интервальные события events
 реализуйте метод calcStartTimes, так, чтобы число принятых к выполнению
@@ -27,6 +29,14 @@ public class B_Sheduler {
         public String toString() {
             return "("+ start +":" + stop + ")";
         }
+
+        public int getStart() {
+            return start;
+        }
+
+        public int getStop() {
+            return stop;
+        }
     }
 
     public static void main(String[] args) {
@@ -50,7 +60,21 @@ public class B_Sheduler {
         //начало и конец событий могут совпадать.
         List<Event> result = new ArrayList<>();
         //ваше решение.
+        List<Event> eventsList = Arrays.asList(events);
+        eventsList.sort(Comparator.comparing(event -> event.stop));
 
+        for (Event event : events){
+            if (result.isEmpty())
+                result.add(event);
+
+            else if (event.start == result.get(result.size() - 1).start && event.stop < result.get(result.size() - 1).stop){
+                result.remove(result.get(result.size() - 1));
+                result.add(event);
+            }
+            else if (event.start >= result.get(result.size() - 1).stop){
+                result.add(event);
+            }
+        }
 
         return result;                        //вернем итог
     }
