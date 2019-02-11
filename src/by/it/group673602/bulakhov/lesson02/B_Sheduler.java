@@ -50,6 +50,7 @@ public class B_Sheduler {
         Arrays.sort(events, (o1, o2)->{
             return Integer.compare(o1.stop, o2.stop);
         });
+
         for(Event event:events){
             if(event.start >= from){
                 result.add(event);
