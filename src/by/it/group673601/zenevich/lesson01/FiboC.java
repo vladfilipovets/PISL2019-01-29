@@ -30,7 +30,7 @@ public class FiboC {
         ArrayList<Long> pizano = new ArrayList();
         pizano.add((long)0);
         pizano.add((long)1);
-        
+
         for(int i = 2; i < n; i++){
             pizano.add((pizano.get(i - 1) + pizano.get(i - 2)) % m);
             if(pizano.get(i) == 1 && pizano.get(i-1) == 0){
