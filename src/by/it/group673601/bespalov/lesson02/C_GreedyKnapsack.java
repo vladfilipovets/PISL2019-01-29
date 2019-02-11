@@ -1,4 +1,4 @@
-package by.it.a_khmelev.lesson02;
+package by.it.group673601.bespalov.lesson02;
 /*
 Даны
 1) объем рюкзака 4
@@ -14,12 +14,15 @@ package by.it.a_khmelev.lesson02;
  */
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class C_GreedyKnapsack {
     private class Item implements Comparable<Item> {
         int cost;
         int weight;
+        int costOfOne;
+
 
         Item(int cost, int weight) {
             this.cost = cost;
@@ -37,8 +40,10 @@ public class C_GreedyKnapsack {
         @Override
         public int compareTo(Item o) {
             //тут может быть ваш компаратор
-
-
+            if (costOfOne < o.costOfOne)
+                return 1;
+            else if (costOfOne > o.costOfOne)
+                return -1;
             return 0;
         }
     }
@@ -65,6 +70,25 @@ public class C_GreedyKnapsack {
         //будет особенно хорошо, если с собственной сортировкой
         //кроме того, можете описать свой компаратор в классе Item
         //ваше решение.
+        for (int i = 0; i < items.length; i++) {
+            items[i].costOfOne = items[i].cost / items[i].weight;
+        }
+
+        Arrays.sort(items);
+
+        int nWeHave = n, wWeHave = W;
+
+        for (int i = 0; i < items.length; i++) {
+            if (items[i].weight <= wWeHave) {
+                wWeHave -= items[i].weight;
+                result += items[i].cost;
+                nWeHave--;
+            } else if (items[i].weight > wWeHave && nWeHave != 0) {
+                result += items[i].costOfOne * wWeHave;
+                wWeHave = 0;
+                break;
+            } else break;
+        }
 
 
 
