@@ -1,4 +1,4 @@
-package by.it.group673602.eliseev.lesson01;
+package by.it.group673601.zenevich.lesson01;
 
 /*
  * Даны целые числа 1<=n<=1E18 и 2<=m<=1E5,
@@ -7,7 +7,6 @@ package by.it.group673602.eliseev.lesson01;
  */
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class FiboC {
 
@@ -21,34 +20,26 @@ public class FiboC {
         FiboC fibo = new FiboC();
         int n = 10;
         int m = 2;
-        try {
-            System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n, m), fibo.time());
-        }
-        catch (ArithmeticException e){
-            System.out.println("0 is not allowed here");
-        }
+        System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n, m), fibo.time());
     }
 
-    long fasterC(long n, int m) throws ArithmeticException{
+    long fasterC(long n, int m) {
         //решение практически невозможно найти интуитивно
         //вам потребуется дополнительный поиск информации
         //см. период Пизано
-        if (m == 0){
-            throw new ArithmeticException();
-        }
-        else if (m == 1){
-            return 0;
-        }
-        ArrayList<Long> fiboMas = new ArrayList<>(2);
-        Collections.addAll(fiboMas, 0L, 1L);
-        int i = 2;
-        for (; i < m * 6; i++){
-            fiboMas.add((fiboMas.get(i - 1) + fiboMas.get(i-2))% m);
-            if (fiboMas.get(i - 1) == 0 && fiboMas.get(i) == 1){
+        ArrayList<Long> pizano = new ArrayList();
+        pizano.add((long)0);
+        pizano.add((long)1);
+
+        for(int i = 2; i < n; i++){
+            pizano.add((pizano.get(i - 1) + pizano.get(i - 2)) % m);
+            if(pizano.get(i) == 1 && pizano.get(i-1) == 0){
+                pizano.remove(i);
+                pizano.remove(i-1);
                 break;
             }
         }
-        return fiboMas.get((int)n % (i - 1));
+        return pizano.get((int)n%pizano.size());
     }
 
 

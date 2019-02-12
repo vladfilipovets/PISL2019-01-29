@@ -1,4 +1,4 @@
-package by.it.group673602.eliseev.lesson01;
+package by.it.group673602.kozlovskaya.lesson01;
 
 /*
  * Даны целые числа 1<=n<=1E18 и 2<=m<=1E5,
@@ -7,7 +7,6 @@ package by.it.group673602.eliseev.lesson01;
  */
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class FiboC {
 
@@ -39,16 +38,17 @@ public class FiboC {
         else if (m == 1){
             return 0;
         }
-        ArrayList<Long> fiboMas = new ArrayList<>(2);
-        Collections.addAll(fiboMas, 0L, 1L);
+        ArrayList<Long> remaindArr = new ArrayList<>(2);
+        remaindArr.add(0L);
+        remaindArr.add(1L);
         int i = 2;
         for (; i < m * 6; i++){
-            fiboMas.add((fiboMas.get(i - 1) + fiboMas.get(i-2))% m);
-            if (fiboMas.get(i - 1) == 0 && fiboMas.get(i) == 1){
+            remaindArr.add((remaindArr.get(i - 1) + remaindArr.get(i-2))% m);
+            if (remaindArr.get(i - 1) == 0 && remaindArr.get(i) == 1){
                 break;
             }
         }
-        return fiboMas.get((int)n % (i - 1));
+        return remaindArr.get((int)n % (i - 1));
     }
 
 

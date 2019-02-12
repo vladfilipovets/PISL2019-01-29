@@ -1,4 +1,4 @@
-package by.it.group673602.eliseev.lesson01;
+package by.it.group673601.gertsik.lesson01;
 
 /*
  * Даны целые числа 1<=n<=1E18 и 2<=m<=1E5,
@@ -7,7 +7,7 @@ package by.it.group673602.eliseev.lesson01;
  */
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 
 public class FiboC {
 
@@ -21,34 +21,26 @@ public class FiboC {
         FiboC fibo = new FiboC();
         int n = 10;
         int m = 2;
-        try {
-            System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n, m), fibo.time());
-        }
-        catch (ArithmeticException e){
-            System.out.println("0 is not allowed here");
-        }
+        System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n, m), fibo.time());
     }
 
-    long fasterC(long n, int m) throws ArithmeticException{
+    long fasterC(long n, int m) {
         //решение практически невозможно найти интуитивно
         //вам потребуется дополнительный поиск информации
         //см. период Пизано
-        if (m == 0){
-            throw new ArithmeticException();
-        }
-        else if (m == 1){
-            return 0;
-        }
-        ArrayList<Long> fiboMas = new ArrayList<>(2);
-        Collections.addAll(fiboMas, 0L, 1L);
-        int i = 2;
-        for (; i < m * 6; i++){
-            fiboMas.add((fiboMas.get(i - 1) + fiboMas.get(i-2))% m);
-            if (fiboMas.get(i - 1) == 0 && fiboMas.get(i) == 1){
+        List<Long> arr = new ArrayList<>();
+        arr.add((long) 0);
+        arr.add((long) 1);
+        for (int i = 2; i < m * 6; i++) {
+            arr.add((arr.get(i - 1) + arr.get(i - 2)) % m);
+            if (arr.get(i) == 1 && arr.get(i - 1) == 0) {
                 break;
             }
         }
-        return fiboMas.get((int)n % (i - 1));
+
+        long period = arr.size() - 2;
+        int val = (int) (n % period);
+        return arr.get(val);
     }
 
 
