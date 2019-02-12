@@ -48,26 +48,20 @@ public class B_Sheduler {
     }
 
     List<Event> calcStartTimes(Event[] events, int from, int to) {
-        //events - события которые нужно распределить в аудитории
-        //в период [from, int] (включительно).
-        //оптимизация проводится по наибольшему числу непересекающихся событий.
-        //начало и конец событий могут совпадать.
         List<Event> result;
         result = new ArrayList<>();
-        //ваше решение.
-        /*while(true) {
-            int i = 0;
-            for(int j = 0; j < events.length; j++) {
-
+        Arrays.sort(events, (e1, e2)->{ return Integer.compare(e1.start, e2.start); });
+        //for(Event event : events) { System.out.println(event); }
+        for(Event event : events) { if(event.start >= from) { result.add(event); break; } }
+        for(Event event : events) {
+            if (event.start >= from) {
+                if (event.start > to) { break; }
+                if (event.stop <= to) {
+                    if (event.start >= result.get(result.size() - 1).stop) { result.add(event); }
+                    if (event.stop < result.get(result.size() - 1).stop) { result.set(result.size() - 1, event); }
+                }
             }
-        }*/
-        for(int i = 0; i < events.length - 1; i++) {
-            //???????Comparator.comparing(events[i] -> events[i].start);
         }
-
-
-
-
         return result;                        //вернем итог
     }
 }
