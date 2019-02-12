@@ -1,4 +1,4 @@
-package by.it.a_khmelev.lesson01;
+package by.it.group673601.kavzovich.lesson01;
 
 import java.math.BigInteger;
 
@@ -21,23 +21,15 @@ public class FiboA {
 
         //вычисление чисел фибоначчи медленным методом (рекурсией)
         fibo = new FiboA();
-        n = 33;
         System.out.printf("slowA(%d)=%d \n\t time=%d \n\n", n, fibo.slowA(n), fibo.time());
     }
 
 
     private int calc(int n) {
-        if (n==0){
-            return 0;
-        }
-       if (n==1)
-       {
-           return 1;
-       }
-       else
-       {
-           return calc(n-1)+calc(n-2);
-       }
+        //здесь простейший вариант, в котором код совпадает с мат.определением чисел Фибоначчи
+        //время O(2^n)
+        if (n < 2) return n;
+        return calc(n - 1) + calc(n - 2);
     }
 
 
@@ -46,20 +38,10 @@ public class FiboA {
         //здесь нужно реализовать вариант без ограничения на размер числа,
         //в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
-        if (n==0)
-        {
-            return BigInteger.ZERO;
-        }
-        if (n==1)
-        {
-            return BigInteger.ONE;
-        }
-        else
-        {
-            return slowA(n-1).add(slowA(n-2));
-        }
+        if (n == 0) return BigInteger.ZERO;
+        if (n == 1) return BigInteger.ONE;
+        return slowA(n - 1).add(slowA(n - 2));
     }
-
 
 
 }
