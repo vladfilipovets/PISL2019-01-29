@@ -31,7 +31,7 @@ public class FiboC {
         List<Long> list = new ArrayList<>();
         list.add(0L);
         list.add(1L);
-        for (int i = 2; i < m * 6; i++) {
+        for (int i = 2; i < (m * 6); i++) {
             list.add((list.get(i - 1) + list.get(i - 2)) % m);
             if (list.get(i) == 1 && list.get(i - 1) == 0) {
                 list.remove(i);
