@@ -19,25 +19,50 @@ public class B_CountSort {
 
 
     int[] countSort(InputStream stream) throws FileNotFoundException {
-        //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        //размер массива
-        int n = scanner.nextInt();
+        int n = scanner.nextInt(); // size of array
         int[] points=new int[n];
-
-        //читаем точки
         for (int i = 0; i < n; i++) {
-            points[i]=scanner.nextInt();
+            points[i] = scanner.nextInt();
         }
-        //тут реализуйте логику задачи с применением сортировки подсчетом
-
-
-
-
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        int min, max = min = points[0];
+        max = getMaxElement(points);
+        min = getMinElement(points);
+        sort(points, min, max);
         return points;
+    }
+
+    private void sort(int[] array, int min, int max) {
+        int[] count = new int[max - min+1];
+        for(int i =0; i < array.length; i++){
+            count[array[i] - min]++;
+        }
+        int index = 0;
+        for(int i =0; i < count.length; i++){
+            for(int j=0; j <count[i]; j++){
+                array[index++] = i + min;
+            }
+        }
+    }
+
+    private int getMaxElement(int[] array) {
+        int max = array[0];
+        for(int i = 1; i<array.length;i++){
+            if(array[i]>max){
+                max = array[i];
+            }
+        }
+        return max;
+    }
+
+    private int getMinElement(int[] array) {
+        int min = array[0];
+        for(int i = 1; i<array.length;i++){
+            if(array[i]<min){
+                min = array[i];
+            }
+        }
+        return min;
     }
 
 
