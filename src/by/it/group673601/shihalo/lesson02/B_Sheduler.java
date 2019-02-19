@@ -1,11 +1,7 @@
 package by.it.group673601.shihalo.lesson02;
 
-import com.sun.org.apache.xalan.internal.xsltc.cmdline.Compile;
-
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 /*
 даны интервальные события events
