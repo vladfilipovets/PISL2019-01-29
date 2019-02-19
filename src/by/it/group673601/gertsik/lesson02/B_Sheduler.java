@@ -54,20 +54,26 @@ public class B_Sheduler {
         List<Event> result;
         result = new ArrayList<>();
         //ваше решение.
-
+        //int i;
         List<Event> sortedArray = Arrays.asList(events);
         sortedArray.sort(Comparator.comparing(event -> event.start));
 
         result.add(sortedArray.get(0));
 
-        for(int i = 0; i < sortedArray.size(); i++){
-            if(sortedArray.get(i).start == result.get(result.size() - 1).start && sortedArray.get(i).stop < result.get(result.size() - 1).stop){
-                result.remove(result.get(result.size() - 1));
-                result.add(sortedArray.get(i));
+
+        int i = 0;
+        while (i < sortedArray.size()){
+            if(sortedArray.get(i).start == result.get(result.size() - 1).start){
+                if(sortedArray.get(i).stop < result.get(result.size() - 1).stop) {
+                    result.remove(result.get(result.size() - 1));
+                    result.add(sortedArray.get(i));
+                    //i++;
+                }
             }
             else if (sortedArray.get(i).start >= result.get(result.size() - 1).stop) {
                 result.add(sortedArray.get(i));
             }
+            i++;
         }
 
         return result;                        //вернем итог

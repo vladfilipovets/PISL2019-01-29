@@ -40,10 +40,11 @@ public class A_VideoRegistrator {
                 i++;
                 continue;
             }
-            // Если событие происходит после окончания записи регистратора
+
             timeToStart = events[i];
-            timeToEnd = timeToStart + workDuration;
             result.add(events[i]);
+            timeToEnd = timeToStart + workDuration;
+
             i++;
         }
         //i - это индекс события events[i]
