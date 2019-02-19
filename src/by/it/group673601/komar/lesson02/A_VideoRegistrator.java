@@ -1,6 +1,7 @@
 package by.it.group673601.komar.lesson02;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 /*
 даны события events
@@ -20,26 +21,33 @@ public class A_VideoRegistrator {
         System.out.println(starts);                            //покажем моменты старта
     }
     //модификаторы доступа опущены для возможности тестирования
-    List<Double> calcStartTimes(double[] events, double workDuration){
+    List<Double> calcStartTimes(double[] events, double workDuration) {
         //events - события которые нужно зарегистрировать
         //timeWorkDuration время работы видеокамеры после старта
-        List<Double> result;
-        result = new ArrayList<>();
-        int i=0;                              //i - это индекс события events[i]
-        //комментарии от проверочного решения сохранены для подсказки, но вы можете их удалить.
-                                              //подготовка к жадному поглощению массива событий
-                                              //hint: сортировка Arrays.sort обеспечит скорость алгоритма
-                                              //C*(n log n) + C1*n = O(n log n)
+        List<Double> res;
+        res = new ArrayList<>();
+        int i, b = 0;
+        List<Double> buf = new ArrayList<>();
+        for (i = 0; i < events.length; i++) {
+            res.add(events[i]);
+        }
+        Collections.sort(res);
+        i = 0;
+        buf.add(res.get(0));
+        while (i != res.size() - 1) {
+            for (int j = 0; j < res.size(); j++) {
+                if ((res.get(i) + workDuration) >= res.get(j)) {
+                    b++;
+                }
 
-                                              //пока есть незарегистрированные события
-                                                //получим одно событие по левому краю
-                                                //и запомним время старта видеокамеры
-                                                //вычислим момент окончания работы видеокамеры
-                                                //и теперь пропустим все покрываемые события
-                                                //за время до конца работы, увеличивая индекс
-
-
-
-        return result;                        //вернем итог
+            }
+            if (b == res.size()) {
+                break;
+            }
+            i = b;
+            b = 0;
+            buf.add(res.get(i));
+        }
+        return buf;
     }
 }

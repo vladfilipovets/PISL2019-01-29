@@ -1,6 +1,8 @@
 package by.it.group673601.komar.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 /*
 даны интервальные события events
@@ -47,15 +49,25 @@ public class B_Sheduler {
         //в период [from, int] (включительно).
         //оптимизация проводится по наибольшему числу непересекающихся событий.
         //начало и конец событий могут совпадать.
-        List<Event> result;
-        result = new ArrayList<>();
+        List<Event> res;
+        res = new ArrayList<>();
         //ваше решение.
+        List<Event> sorE = Arrays.asList(events);
+        sorE.sort(Comparator.comparing(event -> event.start));
 
+        res.add(sorE.get(0));
 
-
-
-
-
-        return result;                        //вернем итог
+        for(int i = 0; i < sorE.size(); i++){
+            if(sorE.get(i).start == res.get(res.size() - 1).start && sorE.get(i).stop < res.get(res.size() - 1).stop){
+                res.remove(res.get(res.size() - 1));
+                res.add(sorE.get(i));
+            }
+            else {
+                    if (sorE.get(i).start >= res.get(res.size() - 1).stop) {
+                    res.add(sorE.get(i));
+                }
+            }
+        }
+        return res;                        //вернем итог
     }
 }
