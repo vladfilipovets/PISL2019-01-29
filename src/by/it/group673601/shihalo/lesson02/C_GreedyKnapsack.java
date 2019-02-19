@@ -14,6 +14,7 @@ package by.it.group673601.shihalo.lesson02;
  */
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class C_GreedyKnapsack {
@@ -37,9 +38,7 @@ public class C_GreedyKnapsack {
         @Override
         public int compareTo(Item o) {
             //тут может быть ваш компаратор
-
-
-            return 0;
+            return Integer.compare(o.cost / o.weight, this.cost / this.weight);
         }
     }
 
@@ -52,6 +51,7 @@ public class C_GreedyKnapsack {
             items[i] = new Item(input.nextInt(), input.nextInt());
         }
         //покажем предметы
+        //Arrays.sort(items);
         for (Item item:items) {
             System.out.println(item);
         }
@@ -66,7 +66,17 @@ public class C_GreedyKnapsack {
         //кроме того, можете описать свой компаратор в классе Item
         //ваше решение.
 
-
+        Arrays.sort(items);
+        for(Item item : items) {
+            if(item.weight >= W) {
+                result += W * item.cost / item.weight;
+                break;
+            }
+            else {
+                result += item.cost;
+                W -= item.weight;
+            }
+        }
 
 
 
