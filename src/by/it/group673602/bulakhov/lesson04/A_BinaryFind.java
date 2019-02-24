@@ -3,6 +3,7 @@ package by.it.group673602.bulakhov.lesson04;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -27,6 +28,17 @@ import java.util.Scanner;
 */
 
 public class A_BinaryFind {
+    int binarySearch(int[] arr, int first, int last, int value){
+        int position = (first + last)/2;
+        while ((arr[position]!=value) && first<=last){
+            if(arr[position] > value) last = position-1;
+            else first = position + 1;
+            position = (first + last)/2;
+        }
+        if(first<=last) return ++position;
+        return -1;
+    }
+
     int[] findIndex(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -46,11 +58,7 @@ public class A_BinaryFind {
         for (int i = 0; i < k; i++) {
             int value = scanner.nextInt();
             //тут реализуйте бинарный поиск индекса
-
-
-
-
-            result[i]=0;
+            result[i]=binarySearch(a, 0, a.length-1, value);
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
@@ -59,7 +67,7 @@ public class A_BinaryFind {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson04/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group673602/bulakhov/lesson04/dataA.txt");
         A_BinaryFind instance = new A_BinaryFind();
         //long startTime = System.currentTimeMillis();
         int[] result=instance.findIndex(stream);
