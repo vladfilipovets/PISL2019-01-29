@@ -1,4 +1,4 @@
-package by.it.group673601.zdasuk.lesson04;
+package lesson04;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,26 +31,38 @@ public class A_BinaryFind {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-
+        int position, last, first;
+        int comparisonCount = 1;// для подсчета количества сравнений
         //размер отсортированного массива
         int n = scanner.nextInt();
         //сам отсортированный массива
-        int[] a=new int[n];
+        int[] a = new int[n];
         for (int i = 1; i <= n; i++) {
-            a[i-1] = scanner.nextInt();
+            a[i - 1] = scanner.nextInt();
         }
-
         //размер массива индексов
         int k = scanner.nextInt();
-        int[] result=new int[k];
+        int[] result = new int[k];
         for (int i = 0; i < k; i++) {
+            first = 0;
+            last = n - 1;
+            position = (first + last) / 2;
             int value = scanner.nextInt();
             //тут реализуйте бинарный поиск индекса
-
-
-
-
-            result[i]=0;
+            while ((a[position] != value) && (first <= last)) {
+                comparisonCount++;
+                if (a[position] > value) {
+                    last = position - 1;
+                } else {
+                    first = position + 1;
+                }
+                position = (first + last) / 2;
+            }
+            if (a[position] == value) {
+                result[i] = position + 1;
+            } else {
+                result[i] = -1;
+            }
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
@@ -59,13 +71,13 @@ public class A_BinaryFind {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson04/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataA.txt");
         A_BinaryFind instance = new A_BinaryFind();
         //long startTime = System.currentTimeMillis();
-        int[] result=instance.findIndex(stream);
+        int[] result = instance.findIndex(stream);
         //long finishTime = System.currentTimeMillis();
-        for (int index:result){
-            System.out.print(index+" ");
+        for (int index : result) {
+            System.out.print(index + " ");
         }
     }
 
