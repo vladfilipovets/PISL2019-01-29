@@ -105,7 +105,7 @@ public class C_HeapMax {
             if (s.equalsIgnoreCase("extractMax")) {
                 Long res=heap.extractMax();
                 if (res!=null && res>maxValue) maxValue=res;
-                System.out.println();
+                System.out.println("MAX = " + res);
                 i++;
             }
             if (s.contains(" ")) {
@@ -123,7 +123,8 @@ public class C_HeapMax {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson03/heapData.txt");
         C_HeapMax instance = new C_HeapMax();
-        System.out.println("MAX="+instance.findMaxValue(stream));
+        instance.findMaxValue(stream);
+        //System.out.println("MAX="+instance.findMaxValue(stream));
     }
 
     // РЕМАРКА. Это задание исключительно учебное.
