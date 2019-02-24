@@ -3,6 +3,8 @@ package by.it.group673602.bulakhov.lesson05;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -38,24 +40,59 @@ import java.util.Scanner;
 public class A_QSort {
 
     //отрезок
-    private class Segment  implements Comparable{
+    private class Segment  implements Comparable<Segment>{
         int start;
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
+            if(start < stop){
+                this.start = start;
+                this.stop = stop;
+            }else {
+                this.start = stop;
+                this.stop = start;
+            }
             //тут вообще-то лучше доделать конструктор на случай если
             //концы отрезков придут в обратном порядке
         }
 
         @Override
-        public int compareTo(Object o) {
+        public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-            return 0;
+            return Integer.compare(this.start, o.start);
         }
     }
 
+    void qSort(Segment[] array, int low, int high){
+        if (array.length == 0) return;//завершить выполнение если длина массива равна 0
+
+        if (low >= high) return;//завершить выполнение если уже нечего делить
+
+        // выбрать опорный элемент
+        int middle = low + (high - low) / 2;
+        Segment opora = array[middle];
+
+        // разделить на подмассивы, который больше и меньше опорного элемента
+        int i = low, j = high;
+        while (i <= j) {
+            while (array[i].compareTo(opora) < 0) i++;
+            while (array[j].compareTo(opora) > 1) j--;
+            if (i <= j) {//меняем местами
+                Segment temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+                i++;
+                j--;
+            }
+        }
+
+        // вызов рекурсии для сортировки левой и правой части
+        if (low < j)
+            qSort(array, low, j);
+
+        if (high > i)
+            qSort(array, i, high);
+    }
 
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -81,8 +118,14 @@ public class A_QSort {
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
+        qSort(segments, 0, segments.length - 1); // сортировка орезков по началу
 
-
+        //подсчет совпадений
+        for (int i = 0; i <points.length ; i++) {
+            for (Segment seg : segments) {
+                if(points[i] >= seg.start && points[i] <= seg.stop) result[i]++;
+            }
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
@@ -91,7 +134,7 @@ public class A_QSort {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson05/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group673602/bulakhov/lesson05/dataA.txt");
         A_QSort instance = new A_QSort();
         int[] result=instance.getAccessory(stream);
         for (int index:result){
