@@ -49,7 +49,7 @@ public class C_HeapMax {
             heap.set(el2, tmp);
         }
 
-        int siftDown(int i) { //просеивание вверх
+        int siftDown(int i) {
             while (2 * i + 1 < heap.size()) {
                 int left = 2 * i + 1;
                 int right = 2 * i + 2;
@@ -66,7 +66,7 @@ public class C_HeapMax {
             return i;
         }
 
-        int siftUp(int i) { //просеивание вниз
+        int siftUp(int i) {
             while (heap.get(i) < heap.get((i - 1) / 2)) {
                 swap(i, (i - 1) / 2);
                 i = (i - 1) / 2;
