@@ -145,7 +145,6 @@ public class A_Huffman {
             InternalNode node = new InternalNode(priorityQueue.remove(), priorityQueue.remove());
             priorityQueue.add(node);
         }
-
         priorityQueue.peek().fillCodes("");
 
         StringBuilder sb = new StringBuilder();
