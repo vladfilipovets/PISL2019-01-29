@@ -2,6 +2,7 @@ package by.it.group673602.pelevanyuk.lesson02;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class A_VideoRegistrator {
@@ -14,24 +15,36 @@ public class A_VideoRegistrator {
     }
     //модификаторы доступа опущены для возможности тестирования
     List<Double> calcStartTimes(double[] events, double workDuration){
+
         List<Double> result;
         result = new ArrayList<>();
-        int i=0;
-        List<Double> events2 = new ArrayList<>();
-        for(double ev : events){
-            events2.add(ev);
+        List<Double> predictedEvents;
+        predictedEvents = new ArrayList<>();
+
+        int index = 0;
+
+        for(double event : events){
+            predictedEvents.add(event);
         }
-        Collections.sort(events2);
-        double timeWorkDuration  = events2.get(0);
-        result.add(timeWorkDuration );
-        timeWorkDuration +=workDuration;
-        for (double time : events2) {
-            if (time > timeWorkDuration ) {
+
+        predictedEvents.sort(Comparator.naturalOrder());
+
+        double timeWorkDuration  = predictedEvents .get(0);
+
+        result.add(timeWorkDuration);
+
+        timeWorkDuration =timeWorkDuration + workDuration;
+
+        for (double time : predictedEvents) {
+            if (time > timeWorkDuration) {
+
                 result.add(time);
+
                 timeWorkDuration  = time;
-                timeWorkDuration +=workDuration;
+
+                timeWorkDuration = timeWorkDuration + workDuration;
             }
         }
-        return result;                        //вернем итог
+        return result;
     }
 }

@@ -1,12 +1,9 @@
 package by.it.group673602.pelevanyuk.lesson02;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class B_Sheduler {
-    static class Event {
+    static class Event implements Comparable<Event>{
         int start;
         int stop;
 
@@ -18,6 +15,16 @@ public class B_Sheduler {
         @Override
         public String toString() {
             return "("+ start +":" + stop + ")";
+        }
+
+
+        @Override
+        public int compareTo(Event o) {
+            if(this.stop > o.stop)
+                return 1;
+            if(this.stop == o.stop)
+                return 0;
+            return -1;
         }
     }
 
@@ -36,17 +43,19 @@ public class B_Sheduler {
     }
 
     List<Event> calcStartTimes(Event[] events, int from, int to) {
-        List<Event> result;
-        result = new ArrayList<>();
-        Arrays.sort(events, (o1, o2)->{
-            return Integer.compare(o1.stop, o2.stop);
-        });
+        List<Event> schedule = new ArrayList<>();
+
+        Arrays.sort(events);
+
         for(Event event:events){
-            if(event.start >= from){
-                result.add(event);
+
+            if(Integer.compare(event.start,from) >= 0){
+
+                schedule.add(event);
+
                 from = event.stop;
             }
         }
-        return result;
+        return schedule;
     }
 }

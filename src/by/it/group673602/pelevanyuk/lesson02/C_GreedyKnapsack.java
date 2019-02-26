@@ -14,8 +14,7 @@ package by.it.group673602.pelevanyuk.lesson02;
  */
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class C_GreedyKnapsack {
     private class Item implements Comparable<Item> {
@@ -37,37 +36,37 @@ public class C_GreedyKnapsack {
 
         @Override
         public int compareTo(Item o) {
-            long r1 = (long)cost * o.weight;
-            long r2 = (long)o.cost * weight;
+            long r1 = (long)this.cost * o.weight;
+            long r2 = (long)o.cost * this.weight;
             return -Long.compare(r1, r2);
         }
     }
 
     double calc(File source) throws FileNotFoundException {
-        Scanner input = new Scanner(source);
-        int n = input.nextInt();      //сколько предметов в файле
-        int W = input.nextInt();      //какой вес у рюкзака
-        Item[] items = new Item[n];   //получим список предметов
-        for (int i = 0; i < n; i++) { //создавая каждый конструктором
-            items[i] = new Item(input.nextInt(), input.nextInt());
+        Scanner inputFile = new Scanner(source);
+        int count = inputFile.nextInt();      //сколько предметов в файле
+        int weight = inputFile.nextInt();      //какой вес у рюкзака
+
+//        Item[] items = new Item[count];   //получим список предметов
+
+        List<Item> items = new ArrayList<Item>(count);
+
+        for (int i = 0; i <= count; i++) { //создавая каждый конструктором
+            items.set(i,new Item(inputFile.nextInt(), inputFile.nextInt()));
         }
-        Arrays.sort(items);
-        for (Item item:items) {
+
+        Collections.sort(items);
+
+        for (Item item : items) {
             System.out.println(item);
         }
-        System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n",n,W);
+
+        System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n",count,weight);
 
         double result = 0;
-        for(Item item : items){
-            if(item.weight <= W){
-                result += item.cost;
-                W -= item.weight;
-            }else{
-                result += (double)item.cost * W/item.weight;
-                break;
-            }
-        }
+
         System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
+
         return result;
     }
 
