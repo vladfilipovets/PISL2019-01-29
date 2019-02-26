@@ -112,6 +112,7 @@ public class A_Huffman {
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
     String encode(File file) throws FileNotFoundException {
+
         Scanner scanner = new Scanner(file);
         String s = scanner.next();
 
@@ -130,8 +131,8 @@ public class A_Huffman {
         //2. перенесем все символы в приоритетную очередь в виде листьев
         PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
         count.forEach((key, value) -> priorityQueue.add(new LeafNode(value, key)));
-        while (priorityQueue.size()>1){
-            InternalNode node = new InternalNode(priorityQueue.remove(),priorityQueue.remove());
+        while (priorityQueue.size() > 1) {
+            InternalNode node = new InternalNode(priorityQueue.remove(), priorityQueue.remove());
             priorityQueue.add(node);
         }
         priorityQueue.peek().fillCodes("");
