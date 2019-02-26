@@ -1,4 +1,4 @@
-package by.it.group673601.zdasuk.lesson02;
+package lesson02;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,20 +28,20 @@ public class A_VideoRegistrator {
         List<Double> result;
         result = new ArrayList<>();
         List<Double> cache = new ArrayList<>();
-        int i, b = 0;
+        int i, b, c;
         int stage = 0;
         for (i = 0; i < events.length; i++) {
             result.add(events[i]);
         }
         Collections.sort(result);
         i = 0;
+        b = 0;
         cache.add(result.get(0));
-        while (i != result.size() - 1) {
-            for (int j = 0; j < result.size(); j++) {
+        while (i < events.length) {
+            for (int j = 0; j < events.length; j++) {
                 if (result.get(i) + workDuration >= result.get(j)) {
                     b++;
                 }
-
             }
             if (b == result.size()) {
                 break;
