@@ -149,7 +149,7 @@ public class A_Huffman {
 
         StringBuilder sb = new StringBuilder();
         for(char c: mas){
-            sb.app  end(codes.get(c));
+            sb.append(codes.get(c));
         }
 
 
