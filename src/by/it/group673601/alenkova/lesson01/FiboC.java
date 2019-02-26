@@ -27,10 +27,13 @@ public class FiboC {
         //решение практически невозможно найти интуитивно
         //вам потребуется дополнительный поиск информации
         //см. период Пизано
+
         ArrayList<Long> period = new ArrayList<>();
         period.add(0L);
         period.add(1L);
+
         // период Пизано не может быть больше 6*m
+
         int i = 2;
         while (i < m * 6) {
             long temp = (period.get(i - 1) + period.get(i - 2)) % m;

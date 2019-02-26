@@ -16,7 +16,7 @@ public class FiboA {
 
     public static void main(String[] args) {
         FiboA fibo = new FiboA();
-        int n = 33;
+        int n;
         n = 33;
         System.out.printf("calc(%d)=%d \n\t time=%d \n\n", n, fibo.calc(n), fibo.time());
 
