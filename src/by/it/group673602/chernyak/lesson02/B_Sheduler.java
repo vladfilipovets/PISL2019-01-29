@@ -58,7 +58,7 @@ public class B_Sheduler {
                 result.add(timetable.get(j));
             }
         }
-        return result;                        //вернем итог
+        return result;                        //вернем итог.
 
     }
 }

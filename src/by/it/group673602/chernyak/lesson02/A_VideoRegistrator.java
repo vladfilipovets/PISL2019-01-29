@@ -47,6 +47,6 @@ public class A_VideoRegistrator {
                 result.add(events[j]);
             }
         }
-        return result;                        //вернем итог
+        return result;                        //вернем итог.
     }
 }
