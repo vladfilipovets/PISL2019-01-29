@@ -45,21 +45,30 @@ public class C_HeapMax {
         private List<Long> heap = new ArrayList<>();
 
         int siftDown(int i) { //просеивание вверх
-            int index;
-            if ((index = 2 * i + 1) < heap.size()){
-                if (heap.get(i) < heap.get(index)){
-                    Collections.swap(heap, i, index);
-                    i = index;
+
+            int childLeft, childRight;
+            childLeft = 2* i + 1 < heap.size() ? 2 * i + 1 : -1 ;
+            childRight = 2* i + 2 < heap.size() ? 2 * i + 2 : -1 ;
+            int ind;
+            if(childLeft > -1 && childRight > -1){
+                if (heap.get(childLeft) > heap.get(childRight)){
+                    ind = childLeft;
                 }
+                else ind = childRight;
             }
-            else if ((index = 2 * i + 2) < heap.size()) {
-                if (heap.get(i) < heap.get((index = 2 * i + 2))) {
-                    Collections.swap(heap, i, index);
-                    i = index;
-                }
+            else if (childLeft > -1){
+                ind = childLeft;
             }
-            if (index != i)
-                return -1;
+            else if (childRight > -1){
+                ind = childRight;
+            }
+            else return -1;
+
+            if (heap.get(ind) > heap.get(i)){
+                Collections.swap(heap, i, ind);
+            }
+            else return -1;
+
             return siftDown(i);
         }
 
