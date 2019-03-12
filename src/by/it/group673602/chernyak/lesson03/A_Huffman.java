@@ -43,12 +43,12 @@ public class A_Huffman {
     //Изучите классы Node InternalNode LeafNode
     abstract class Node implements Comparable<Node> {
         //абстрактный класс элемент дерева
-        //(сделан abstract, чтобы нельзя было использовать его напрямую)
-        //а только через его версии InternalNode и LeafNode
+//(сделан abstract, чтобы нельзя было использовать его напрямую)
+//а только через его версии InternalNode и LeafNode
         private final int frequence; //частота символов
 
         //генерация кодов (вызывается на корневом узле
-        //один раз в конце, т.е. после построения дерева)
+//один раз в конце, т.е. после построения дерева)
         abstract void fillCodes(String code);
 
         //конструктор по умолчанию
@@ -57,7 +57,7 @@ public class A_Huffman {
         }
 
         //метод нужен для корректной работы узла в приоритетной очереди
-        //или для сортировок
+//или для сортировок
         @Override
         public int compareTo(Node o) {
             return Integer.compare(frequence, o.frequence);
@@ -65,14 +65,14 @@ public class A_Huffman {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
-    //расширение базового класса до внутреннего узла дерева
+//расширение базового класса до внутреннего узла дерева
     private class InternalNode extends Node {
         //внутренный узел дерева
-        Node left;  //левый ребенок бинарного дерева
+        Node left; //левый ребенок бинарного дерева
         Node right; //правый ребенок бинарного дерева
 
         //для этого дерева не существует внутренних узлов без обоих детей
-        //поэтому вот такого конструктора будет достаточно
+//поэтому вот такого конструктора будет достаточно
         InternalNode(Node left, Node right) {
             super(left.frequence + right.frequence);
             this.left = left;
@@ -88,7 +88,7 @@ public class A_Huffman {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
-    //расширение базового класса до листа дерева
+//расширение базового класса до листа дерева
     private class LeafNode extends Node {
         //лист
         char symbol; //символы хранятся только в листах
@@ -100,8 +100,8 @@ public class A_Huffman {
 
         @Override
         void fillCodes(String code) {
-            //добрались до листа, значит рекурсия закончена, код уже готов
-            //и можно запомнить его в индексе для поиска кода по символу.
+//добрались до листа, значит рекурсия закончена, код уже готов
+//и можно запомнить его в индексе для поиска кода по символу.
             codes.put(this.symbol, code);
         }
     }
@@ -110,42 +110,53 @@ public class A_Huffman {
     static private Map<Character, String> codes = new TreeMap<>();
 
 
-    //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+    //!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!
     String encode(File file) throws FileNotFoundException {
-        //прочитаем строку для кодирования из тестового файла
+
         Scanner scanner = new Scanner(file);
         String s = scanner.next();
 
-        //все комментарии от тестового решения были оставлены т.к. это задание A.
-        //если они вам мешают их можно удалить
-
         Map<Character, Integer> count = new HashMap<>();
-        //1. переберем все символы по очереди и рассчитаем их частоту в Map count
-            //для каждого символа добавим 1 если его в карте еще нет или инкремент если есть.
+        s.chars().forEach(ch -> {
+            if (count.containsKey((char) ch)) {
+                count.put((char) ch, count.get((char) ch) + 1);
+            } else {
+                count.put((char) ch, 1);
+            }
+        });
+//1. переберем все символы по очереди и рассчитаем их частоту в Map count
+//для каждого символа добавим 1 если его в карте еще нет
+// или инкремент если есть.
 
-        //2. перенесем все символы в приоритетную очередь в виде листьев
+//2. перенесем все символы в приоритетную очередь в виде листьев
         PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
+        count.forEach((key, value) -> priorityQueue.add(new LeafNode(value, key)));
+        while (priorityQueue.size() > 1) {
+            InternalNode node = new InternalNode(priorityQueue.remove(), priorityQueue.remove());
+            priorityQueue.add(node);
+        }
+        priorityQueue.peek().fillCodes("");
 
-        //3. вынимая по два узла из очереди (для сборки родителя)
-        //и возвращая этого родителя обратно в очередь
-        //построим дерево кодирования Хаффмана.
-        //У родителя частоты детей складываются.
+//3. вынимая по два узла из очереди (для сборки родителя)
+//и возвращая этого родителя обратно в очередь
+//построим дерево кодирования Хаффмана.
+//У родителя частоты детей складываются.
 
-        //4. последний из родителей будет корнем этого дерева
-        //это будет последний и единственный элемент оставшийся в очереди priorityQueue.
+//4. последний из родителей будет корнем этого дерева
+//это будет последний и единственный элемент оставшийся в очереди priorityQueue.
         StringBuilder sb = new StringBuilder();
-        //.....
+        s.chars().forEach(ch -> sb.append(codes.get((char) ch)));
 
         return sb.toString();
-        //01001100100111
-        //01001100100111
+//01001100100111
+//01001100100111
     }
-    //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!
 
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/a_khmelov/lesson03/dataHuffman.txt");
+        File f = new File(root + "by/it/a_khmelev/lesson03/dataHuffman.txt");
         A_Huffman instance = new A_Huffman();
         long startTime = System.currentTimeMillis();
         String result = instance.encode(f);
@@ -156,5 +167,5 @@ public class A_Huffman {
         }
         System.out.println(result);
     }
-
 }
+
