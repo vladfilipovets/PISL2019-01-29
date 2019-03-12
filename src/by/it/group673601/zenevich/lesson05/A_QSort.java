@@ -90,8 +90,10 @@ public class A_QSort {
                     count++;
                 }
             }
+
             result[i] = count;
         }
+
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

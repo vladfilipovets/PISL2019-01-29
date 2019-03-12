@@ -81,7 +81,6 @@ public class A_BinaryFind {
         A_BinaryFind instance = new A_BinaryFind();
         //long startTime = System.currentTimeMillis();
         int[] result=instance.findIndex(stream);
-        //long finishTime = System.currentTimeMillis();
         for (int index:result){
             System.out.print(index+" ");
         }
