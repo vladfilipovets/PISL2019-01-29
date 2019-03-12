@@ -69,13 +69,13 @@ public class C_GreedyKnapsack {
         //ваше решение.
         Arrays.sort(items);
         for(Item item : items) {
-            if(item.weight >= W) {
-                result += W * item.cost / item.weight;
-                break;
-            }
-            else {
+            if(item.weight <= W) {
                 result += item.cost;
                 W -= item.weight;
+            }
+            else {
+                result += W * item.cost / item.weight;
+                break;
             }
         }
 
