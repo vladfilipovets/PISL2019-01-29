@@ -48,7 +48,7 @@ public class Lesson4Test {
     @Test
     public void C() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson04/dataC.txt");
+        InputStream stream = new FileInputStream("C:\\Users\\a s u s\\IdeaProjects\\projectpisl\\src\\by\\it\\group673601\\vershok\\lesson01\\lesson04\\dataC.txt");
         C_GetInversions instance = new C_GetInversions();
         //long startTime = System.currentTimeMillis();
         int result = instance.calc(stream);
