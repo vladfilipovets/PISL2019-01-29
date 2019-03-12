@@ -3,6 +3,9 @@ package by.it.group673602.kabushkov.lesson04;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -32,30 +35,49 @@ public class A_BinaryFind {
         Scanner scanner = new Scanner(stream);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
 
+
         //размер отсортированного массива
         int n = scanner.nextInt();
         //сам отсортированный массива
-        int[] a=new int[n];
+        int[] a = new int[n];
         for (int i = 1; i <= n; i++) {
-            a[i-1] = scanner.nextInt();
+            a[i - 1] = scanner.nextInt();
         }
+
+        List<Integer> listNumber = new ArrayList();
+        for (Integer integer : a) {
+            listNumber.add(integer);
+        }
+        Collections.sort(listNumber);
 
         //размер массива индексов
         int k = scanner.nextInt();
-        int[] result=new int[k];
+        int[] result = new int[k];
         for (int i = 0; i < k; i++) {
             int value = scanner.nextInt();
             //тут реализуйте бинарный поиск индекса
 
+            result[i]= (int) binarSearch(listNumber,value,0,listNumber.size());
 
-
-
-            result[i]=0;
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
+    int binarSearch(List<Integer> mas, int number, int left, int right) {
+        if (mas.get((right + left) / 2) > number) {
+            return binarSearch(mas, number, left, (right + left) / 2);
+        } else {
+            if (mas.get((right + left) / 2) < number && (((right + left) / 2) + 1 != right ) ) {
+
+                return binarSearch(mas, number, (right + left) / 2, right);
+            } else if (mas.get((right + left) / 2) == number) {
+                return ((right + left) / 2)+1;
+            } else {
+                return -1;
+            }
+        }
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
