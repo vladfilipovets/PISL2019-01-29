@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -37,45 +38,87 @@ import java.util.Scanner;
 
 public class C_HeapMax {
 
-    private class MaxHeap {
+    private class MaxHeap<T extends Comparable<T>> {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение.
         //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
-        private List<Long> heap = new ArrayList<>();
+        private static final int DEFAULT_SIZE = 16;
+        private static final double DEFAULT_OCCUPANCY = 0.75;
 
-        int siftDown(int i) { //просеивание вверх
+        private int currentMemorySize = DEFAULT_SIZE;
 
-            return i;
+        private Object[] heap = new Object[DEFAULT_SIZE];
+        private int size = 0;
+
+        @SuppressWarnings("unchecked")
+        void siftDown(int i) {
+            while (2 * i + 1 < size) {
+                int left = 2 * i + 1;
+                int right = 2 * i + 2;
+                int j = left;
+                if (right < size && ((T) heap[right]).compareTo((T) heap[left]) < 0) {
+                    j = right;
+                }
+                if (((T) heap[i]).compareTo((T) heap[j]) >= 0) {
+                    break;
+                }
+                swap(i, j);
+                i = j;
+            }
         }
 
-        int siftUp(int i) { //просеивание вниз
-
-            return i;
+        @SuppressWarnings("unchecked")
+        void siftUp(int i) {
+            while (((T) heap[i]).compareTo((T) heap[(i - 1) / 2]) > 0) {
+                swap(i, (i - 1) / 2);
+                i = (i - 1) / 2;
+            }
         }
 
-        void insert(Long value) { //вставка
+        void insert(T value) {
+            heap[size] = value;
+            size++;
+            siftUp(size - 1);
+            if ((double) size / currentMemorySize > DEFAULT_OCCUPANCY) {
+                resize();
+            }
         }
 
-        Long extractMax() { //извлечение и удаление максимума
-            Long result = null;
-
-            return result;
+        void swap(int i, int j) {
+            Object temp = heap[i];
+            heap[i] = heap[j];
+            heap[j] = temp;
         }
+
+        @SuppressWarnings("unchecked")
+        T extractMax() { //извлечение и удаление максимума
+            T max = (T) heap[0];
+            heap[0] = heap[size - 1];
+            heap[size - 1] = null;
+            size--;
+            siftDown(0);
+            return max;
+        }
+
+        void resize() {
+            heap = Arrays.copyOf(heap, currentMemorySize * 2);
+        }
+
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
     }
 
     //эта процедура читает данные из файла, ее можно не менять.
     Long findMaxValue(InputStream stream) {
-        Long maxValue=0L;
-        MaxHeap heap = new MaxHeap();
+        Long maxValue = 0L;
+        MaxHeap<Long> heap = new MaxHeap<>();
         //прочитаем строку для кодирования из тестового файла
         Scanner scanner = new Scanner(stream);
         Integer count = scanner.nextInt();
         for (int i = 0; i < count; ) {
             String s = scanner.nextLine();
             if (s.equalsIgnoreCase("extractMax")) {
-                Long res=heap.extractMax();
-                if (res!=null && res>maxValue) maxValue=res;
+                Long res = heap.extractMax();
+                if (res != null && res > maxValue) maxValue = res;
                 System.out.println();
                 i++;
             }
@@ -84,7 +127,7 @@ public class C_HeapMax {
                 if (p[0].equalsIgnoreCase("insert"))
                     heap.insert(Long.parseLong(p[1]));
                 i++;
-            //System.out.println(heap); //debug
+                //System.out.println(heap); //debug
             }
         }
         return maxValue;
@@ -92,9 +135,9 @@ public class C_HeapMax {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson03/heapData.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group673601/kostritsa/lesson03/heapData.txt");
         C_HeapMax instance = new C_HeapMax();
-        System.out.println("MAX="+instance.findMaxValue(stream));
+        System.out.println("MAX=" + instance.findMaxValue(stream));
     }
 
     // РЕМАРКА. Это задание исключительно учебное.
