@@ -7,7 +7,7 @@ package by.it.a_khmelev.lesson02;
     100 50
     120 30
     100 50
-Все это указано в файле (by/it/a_khmelov/lesson02/greedyKnapsack.txt)
+Все это указано в файле (by/it/a_khmelev/lesson02/greedyKnapsack.txt)
 
 Необходимо собрать наиболее дорогой вариант рюкзака для этого объема
 Предметы можно резать на кусочки (т.е. алгоритм будет жадным)
@@ -77,7 +77,7 @@ public class C_GreedyKnapsack {
     public static void main(String[] args) throws FileNotFoundException {
         long startTime = System.currentTimeMillis();
         String root=System.getProperty("user.dir")+"/src/";
-        File f=new File(root+"by/it/a_khmelov/lesson02/greedyKnapsack.txt");
+        File f=new File(root+"by/it/a_khmelev/lesson02/greedyKnapsack.txt");
         double costFinal=new C_GreedyKnapsack().calc(f);
         long finishTime = System.currentTimeMillis();
         System.out.printf("Общая стоимость %f (время %d)",costFinal,finishTime - startTime);
