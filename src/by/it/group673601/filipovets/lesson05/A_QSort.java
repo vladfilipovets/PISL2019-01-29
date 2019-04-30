@@ -57,7 +57,7 @@ public class A_QSort {
 
         @Override
         public int compareTo(Segment o) {
-            return (o.stop - o.start) - (stop - start);
+            return (o.stop - o.start) - (this.stop - this.start);
         }
     }
 
@@ -87,12 +87,10 @@ public class A_QSort {
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
         quickSort(segments, 0, segments.length - 1);
+
         for (int i = 0; i < points.length; i++) {
             int count = 0;
             for (Segment segment : segments) {
-                if (points[i] < segment.start) {
-                    break;
-                }
                 if (points[i] <= segment.stop && points[i] >= segment.start) {
                     count++;
                 }

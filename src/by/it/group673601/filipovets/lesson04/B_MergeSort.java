@@ -72,7 +72,11 @@ public class B_MergeSort {
         // тут ваше решение (реализуйте сортировку слиянием)
         // https://ru.wikipedia.org/wiki/Сортировка_слиянием
 
-        a = mergeSort(a, 0, a.length - 1);
+        //a = mergeSort(a, 0, a.length - 1);
+        int length = a.length;
+        if (length < 2) return a;
+        int middle = length/2;
+        a = merge(mergeSort(a, 0, middle), mergeSort(a, middle, length-1) );
 
 
 
